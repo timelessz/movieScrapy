@@ -91,7 +91,7 @@ SPIDER_MIDDLEWARES = {
 # HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
 # 爬虫数据库
-MYSQL_HOST = '47.52.103.21'
+MYSQL_HOST = ''
 MYSQL_DBNAME = 'movie'
 MYSQL_USER = 'root'
 MYSQL_PASSWD = '201671zhuang'
