@@ -1,7 +1,5 @@
-import base64
+#coding=utf-8
 import urllib
-from builtins import int
-from math import ceil
 
 import pymysql
 import re
