@@ -1,6 +1,6 @@
 import base64
 import urllib
-from builtins import print, int
+from builtins import int
 from math import ceil
 
 import pymysql
