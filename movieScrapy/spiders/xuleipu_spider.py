@@ -1,8 +1,4 @@
 # -*- coding: UTF-8 -*-
-# ! python3
-import sys
-reload(sys)
-sys.setdefaultencoding('utf-8')
 
 import urllib
 from math import ceil

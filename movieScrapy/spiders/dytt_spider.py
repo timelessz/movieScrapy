@@ -1,5 +1,4 @@
 # -*- coding: UTF-8 -*-
-#! python3
 import urllib
 
 import pymysql
