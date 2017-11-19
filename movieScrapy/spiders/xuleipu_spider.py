@@ -1,6 +1,9 @@
-#coding=utf-8
-#! python3
-import base64
+# -*- coding: UTF-8 -*-
+# ! python3
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
+
 import urllib
 from math import ceil
 
@@ -229,7 +232,7 @@ class XunleipuSpider(scrapy.Spider):
         self.reconn()
         cur = self.conn.cursor()
         cur.execute("SELECT id FROM movie_xunleipu_list where title like '%" + title + "%'")
-        movie= cur.fetchone()
+        movie = cur.fetchone()
         self.conn.close()
         return movie
 
