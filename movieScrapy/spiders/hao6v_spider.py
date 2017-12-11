@@ -111,7 +111,7 @@ class Hao6vSpider(scrapy.Spider):
                 print(item['title'] + '电影已经存在，放弃爬取数据')
                 print('**********************************')
         # for i in range(2, int(page_num) + 1):
-        for i in range(2, 100):
+        for i in range(2, 3):
             url = start_url % i
             request = scrapy.Request(url=url, callback=self.parse_list)
             yield request
