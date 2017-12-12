@@ -23,7 +23,8 @@ from movieScrapy.items import XunleipuMovieItem
 
 
 class Hao6vSpider(scrapy.Spider):
-    name = "hao6v"
+
+    name = "haov"
 
     # 每一个 spider 设置不一样的 pipelines
     custom_settings = {
