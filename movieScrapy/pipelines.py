@@ -532,7 +532,7 @@ class hao6vMoviescrapyPipeline(object):
                     pymysql.escape_string(item['content']), item['region_id'], item['region_name'], currenttime,
                     currenttime, item['href'], coversrc))
                 self.conn.commit()
-                selectsql = 'select id,name from movie.movie_hao6v_list WHERE name="%s"' % item['name']
+                selectsql = 'select id,name from movie.movie_hao6v_list WHERE name="%s" order by id desc limit 1' % item['name']
                 cursor.execute(selectsql)
                 movie_idinfo = cursor.fetchone()
                 print(movie_idinfo)
