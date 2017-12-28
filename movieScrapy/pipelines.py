@@ -7,6 +7,7 @@
 import re
 import time
 from builtins import print
+from select import select
 
 import pymysql
 
@@ -714,10 +715,8 @@ class BtbtMoviescrapyPipeline(object):
             sql = "select id,name from movie.movie_type"
             cursor.execute(sql)
             type_info = cursor.fetchall()
-            print(type_info)
             # type 信息
             movietype_info = re.split('/| ', item['type'])
-            print(movietype_info)
             type_ids_str = ','
             for movietype in movietype_info:
                 # 数据库中爬取的分类
@@ -734,9 +733,9 @@ class BtbtMoviescrapyPipeline(object):
                     typesql = 'insert into movie_type(`name`,`created_at`) VALUES ("%s","%s")' % (
                         movietype, currenttime)
                     # 分类sql
-                    print('????????????????????????????')
-                    print(typesql)
-                    print('????????????????????????????')
+                    # print('????????????????????????????')
+                    # print(typesql)
+                    # print('????????????????????????????')
                     cursor.execute(typesql)
                     self.conn.commit()
                     # 然后获取 插入的id 是多少
@@ -749,6 +748,9 @@ class BtbtMoviescrapyPipeline(object):
             print('????????????????????????????///////')
             sql = 'insert into movie_btbtdy_list (name,alias_name,title,ages,country,type,language,starring,' \
                   'summary,content,region_id,region_name,create_time,update_time,href,coversrc) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)'
+            print('-------------------------------------------------')
+            print(sql)
+            print('-------------------------------------------------')
             cursor.execute(sql, (
                 item['name'], item['name'], item['name'], item['ages'], item['country'], type_ids_str, item['language'],
                 item['starring'], item['summary'], item['content'], item['region_id'], item['region_name'],

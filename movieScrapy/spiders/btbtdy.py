@@ -1,4 +1,5 @@
 # -*- coding: UTF-8 -*-
+import random
 import urllib
 
 import pymysql
@@ -26,7 +27,7 @@ class BtbtdySpider(scrapy.Spider):
         'ITEM_PIPELINES': {
             'movieScrapy.pipelines.BtbtMoviescrapyPipeline': 100,
         },
-        'DOWNLOAD_DELAY': 10
+        'DOWNLOAD_DELAY': 15
     }
 
     def __init__(self, *args, **kwargs):
@@ -80,13 +81,31 @@ class BtbtdySpider(scrapy.Spider):
             start_url = spider_urls[i]['start_url']
             url = spider_urls[i]['url']
             request = scrapy.Request(url=start_url, callback=self.parse)
-            request.meta['url'] = url
+            request.meta['start_url'] = url
             yield request
 
     def parse(self, response):
-        sel = Selector(response)
         # 首先解析出第一页的页面信息
-        start_url = response.meta['url']
+        start_url = response.meta['start_url']
+        self.parse_list(response)
+        for i in range(30, 40):
+            url = start_url % i
+            request = scrapy.Request(url=url, callback=self.parse_list)
+            request.meta['url'] = url
+            yield request
+
+    def get_movie(self, title):
+        cur = self.conn.cursor()
+        cur.execute("SELECT id FROM movie_btbtdy_list where title like '%" + title + "%'")
+        return cur.fetchone()
+
+    def parse_list(self, response):
+        '''
+        解析列表
+        :param response:
+        :return:
+        '''
+        parenturl = response.meta['url']
         sel = Selector(response)
         lis = sel.xpath('/html/body/*[contains(@class,"list_su")]/ul/li')
         for li in lis:
@@ -104,54 +123,12 @@ class BtbtdySpider(scrapy.Spider):
                 if href:
                     # 截取movie_id 出来
                     movie_id = href[8:href.find('.html')]
-                    # print(movie_id)
                     # 把相对路径转换为绝对路径
-                    href = urllib.parse.urljoin(start_url, href)
+                    href = urllib.parse.urljoin(parenturl, href)
                     item['href'] = href
                     request = scrapy.Request(url=href, callback=self.parse_content)
                     request.meta['item'] = item
                     request.meta['id'] = movie_id
-                    yield request
-            else:
-                print('**********************************')
-                print(item['title'] + '电影已经存在，放弃爬取数据')
-                print('**********************************')
-        # for i in range(2, 4):
-        #     url = start_url % i
-        #     request = scrapy.Request(url=url, callback=self.parse_list)
-        #     yield request
-
-    def get_movie(self, title):
-        cur = self.conn.cursor()
-        cur.execute("SELECT id FROM movie_btbtdy_list where title like '%" + title + "%'")
-        return cur.fetchone()
-
-    def parse_list(self, response):
-        '''
-        解析列表
-        :param response:
-        :return:
-        '''
-        sel = Selector(response)
-        lis = sel.xpath(
-            '//*[@id="main"]/*[contains(@class,"col4")]/*[contains(@class,"box")]/*[contains(@class,"list")]/li')
-        for li in lis:
-            item = XunleipuMovieItem()
-            title = li.xpath('a')
-            href = title.xpath('@href').extract_first()
-            text = title.xpath('text()').extract_first()
-            if text is None:
-                text = title.xpath('font/text()').extract_first()
-            item['title'] = text.strip()
-            if self.get_movie(item['title']) is None:
-                item['region_id'] = 0
-                item['region_name'] = ''
-                # 获取详细内容页面 的url 使用相对路径跟绝对路径
-                if href:
-                    # 把相对路径转换为绝对路径
-                    item['href'] = href
-                    request = scrapy.Request(url=href, callback=self.parse_content)
-                    request.meta['item'] = item
                     yield request
             else:
                 print('**********************************')
