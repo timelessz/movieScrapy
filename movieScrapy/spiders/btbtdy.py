@@ -64,7 +64,6 @@ class BtbtdySpider(scrapy.Spider):
         spider_urls = {
             'dianying': {
                 'url': 'http://www.btbtdy.com/btfl/dy1-%s.html',
-                'start_url': 'http://www.btbtdy.com/btfl/dy1.html',
                 'type': 'dy'
             }
         }
@@ -72,27 +71,14 @@ class BtbtdySpider(scrapy.Spider):
         '''
         首先获取第一页 然后获取总的数量 用来判断总共多少页面
         '''
-        # item = BtbtdyMovieItem()
-        # request = scrapy.Request(url='http://www.btbtdy.com/vidlist/11732.html', callback=self.parse_downloadlink)
-        # request.meta['item'] = item
-        # yield request
-
         for i in spider_urls:
-            start_url = spider_urls[i]['start_url']
             url = spider_urls[i]['url']
-            request = scrapy.Request(url=start_url, callback=self.parse)
-            request.meta['start_url'] = url
-            yield request
-
-    def parse(self, response):
-        # 首先解析出第一页的页面信息
-        start_url = response.meta['start_url']
-        self.parse_list(response)
-        for i in range(2, 3):
-            url = start_url % i
-            request = scrapy.Request(url=url, callback=self.parse_list)
-            request.meta['url'] = url
-            yield request
+            # 首先解析出第一页的页面信息
+            for page in range(1, 3):
+                starturl = url % page
+                request = scrapy.Request(url=starturl, callback=self.parse_list)
+                request.meta['url'] = starturl
+                yield request
 
     def get_movie(self, title):
         cur = self.conn.cursor()
@@ -116,7 +102,8 @@ class BtbtdySpider(scrapy.Spider):
             item['coversrc'] = li.xpath('*[contains(@class,"liimg")]/a/img/@data-src').extract_first()
             item['title'] = text.strip()
             item['name'] = item['title']
-            if self.get_movie(item['title']) is None:
+            checkstatus = self.get_movie(item['title'])
+            if checkstatus is None:
                 # 获取详细内容页面 的url 使用相对路径跟绝对路径
                 item['region_id'] = 0
                 item['region_name'] = ''
