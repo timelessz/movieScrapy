@@ -72,11 +72,6 @@ class BtbtdySpider(scrapy.Spider):
         '''
         首先获取第一页 然后获取总的数量 用来判断总共多少页面
         '''
-        # item = BtbtdyMovieItem()
-        # request = scrapy.Request(url='http://www.btbtdy.com/vidlist/11732.html', callback=self.parse_downloadlink)
-        # request.meta['item'] = item
-        # yield request
-
         for i in spider_urls:
             start_url = spider_urls[i]['start_url']
             url = spider_urls[i]['url']
@@ -88,7 +83,7 @@ class BtbtdySpider(scrapy.Spider):
         # 首先解析出第一页的页面信息
         start_url = response.meta['start_url']
         self.parse_list(response)
-        for i in range(30, 40):
+        for i in range(2, 4):
             url = start_url % i
             request = scrapy.Request(url=url, callback=self.parse_list)
             request.meta['url'] = url
