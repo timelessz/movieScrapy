@@ -31,7 +31,8 @@ class XunleipuSpider(scrapy.Spider):
     custom_settings = {
         'ITEM_PIPELINES': {
             'movieScrapy.pipelines.MoviescrapyPipeline': 100,
-        }
+        },
+        'DOWNLOAD_DELAY': 10
     }
 
     def __init__(self, *args, **kwargs):
