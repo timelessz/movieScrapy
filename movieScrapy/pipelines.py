@@ -47,8 +47,7 @@ class MoviescrapyPipeline(object):
             for imgsrc in item['imglist']:
                 if not coversrc:
                     coversrc = imgsrc
-                else:
-                    imglist.append(imgsrc)
+                imglist.append(imgsrc)
             with self.conn.cursor() as cursor:
                 # 需要从数据库中 获取 电影的 类型：然后 匹配下电影的分类
                 type_info = []
@@ -56,7 +55,6 @@ class MoviescrapyPipeline(object):
                 sql = "select id,name from movie.movie_type"
                 cursor.execute(sql)
                 type_info = cursor.fetchall()
-                # print(type_info)
                 # type 信息
                 movietype_info = re.split('/| ', item['type'])
                 type_ids_str = ','
@@ -483,8 +481,7 @@ class hao6vMoviescrapyPipeline(object):
             for imgsrc in item['imglist']:
                 if not coversrc:
                     coversrc = imgsrc
-                else:
-                    imglist.append(imgsrc)
+                imglist.append(imgsrc)
             with self.conn.cursor() as cursor:
                 # 需要从数据库中 获取 电影的 类型：然后 匹配下电影的分类
                 type_info = []
@@ -562,14 +559,14 @@ class hao6vMoviescrapyPipeline(object):
                     cursor.execute(add_download_sql + insert_sql)
                     self.conn.commit()
                 # 然后添加电影的图片链接 这块可以单独封装函数
-                add_img_sql = 'insert into movie.movie_hao6v_imglist(movie_id,imgsrc,create_time,update_time) VALUES'
-                imgtemplatesql = "(%s,'%s',%s,%s)"
+                add_img_sql = 'insert into movie.movie_hao6v_imglist(movie_id,movie_name,imgsrc,create_time,update_time) VALUES'
+                imgtemplatesql = "(%s,%s,'%s',%s,%s)"
                 insert_img_sql = ''
                 currenttime = int(time.time())
                 i = 1
                 for img in imglist:
                     img_sql = imgtemplatesql % (
-                        movie_idinfo['id'], img, currenttime, currenttime)
+                        movie_idinfo['id'], item['name'], img, currenttime, currenttime)
                     if i == 1:
                         insert_img_sql = img_sql
                     else:
@@ -589,8 +586,7 @@ class hao6vMoviescrapyPipeline(object):
             for imgsrc in item['imglist']:
                 if not coversrc:
                     coversrc = imgsrc
-                else:
-                    imglist.append(imgsrc)
+                imglist.append(imgsrc)
             with self.conn.cursor() as cursor:
                 sql = "insert into movie.movie_hao6v_list(title, content, region_id, region_name, update_time, create_time, href, coversrc) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)"
                 cursor.execute(sql, (
