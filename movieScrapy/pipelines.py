@@ -130,7 +130,7 @@ class MoviescrapyPipeline(object):
                 i = 1
                 for img in imglist:
                     img_sql = imgtemplatesql % (
-                        movie_idinfo['id'], img, currenttime, currenttime)
+                        movie_idinfo['id'], item['name'], img, currenttime, currenttime)
                     if i == 1:
                         insert_img_sql = img_sql
                     else:

@@ -298,7 +298,6 @@ class XunleipuSpider(scrapy.Spider):
             print(content_sel.extract())
             print(
                 '/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////没有获取到电影下载链接///////////////////////////////////')
-            return
         item['download_a'] = a_download_info
         # 提取处内容来
         if content_sel:
