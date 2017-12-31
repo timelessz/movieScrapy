@@ -176,13 +176,13 @@ class XunleipuSpider(scrapy.Spider):
         #  这个地方有问题  http://www.xlpu.cc/category/1_1.htm   应该获取的是 根目录
         #  首先知道 总共有多少
         #  从谷歌中提取的xpath链接 需要排除出 tbody
-        alllist_count = int(
-            sel.xpath('//*[@id="classpage2"]/div[5]/table/tr[21]/td/table/tr/td/font[3]/text()').extract_first())
-        page_num = ceil(alllist_count / 20)
-        # 总的页面数量
-        print(alllist_count)
+        # alllist_count = int(
+        #     sel.xpath('//*[@id="classpage2"]/div[5]/table/tr[21]/td/table/tr/td/font[3]/text()').extract_first())
+        # page_num = ceil(alllist_count / 20)
+        # # 总的页面数量
+        # print(alllist_count)
         # 页面num
-        print(page_num)
+        # print(page_num)
         # 首先解析出第一页的页面信息
         category = response.meta['category']
         sel = Selector(response)
