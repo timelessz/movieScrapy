@@ -217,7 +217,7 @@ class XunleipuSpider(scrapy.Spider):
         category = response.meta['category']
         start_url = category['url']
         # for i in range(2,page_num+1)
-        for i in range(2, 5):
+        for i in range(2, 3):
             url = start_url % i
             print(url)
             request = scrapy.Request(url=url, callback=self.parse_list)
