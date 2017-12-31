@@ -123,8 +123,8 @@ class MoviescrapyPipeline(object):
                     cursor.execute(add_download_sql + insert_sql)
                     self.conn.commit()
                 # 然后添加电影的图片链接 这块可以单独封装函数
-                add_img_sql = 'insert into movie.movie_xunleipu_imglist(movie_id,imgsrc,create_time,update_time) VALUES'
-                imgtemplatesql = "(%s,'%s',%s,%s)"
+                add_img_sql = 'insert into movie.movie_xunleipu_imglist(movie_id,movie_name,imgsrc,create_time,update_time) VALUES'
+                imgtemplatesql = "(%s,'%s','%s',%s,%s)"
                 insert_img_sql = ''
                 currenttime = int(time.time())
                 i = 1
@@ -207,14 +207,14 @@ class MoviescrapyPipeline(object):
                     cursor.execute(add_download_sql + insert_sql)
                     self.conn.commit()
                 # 然后添加电影的图片链接 这块可以单独封装函数
-                add_img_sql = 'insert into movie.movie_xunleipu_imglist(movie_id,imgsrc,create_time,update_time) VALUES'
-                imgtemplatesql = "(%s,'%s',%s,%s)"
+                add_img_sql = 'insert into movie.movie_xunleipu_imglist(movie_id,movie_name,imgsrc,create_time,update_time) VALUES'
+                imgtemplatesql = "(%s,'%s','%s',%s,%s)"
                 insert_img_sql = ''
                 currenttime = int(time.time())
                 i = 1
                 for img in imglist:
                     img_sql = imgtemplatesql % (
-                        movie_idinfo['id'], img, currenttime, currenttime)
+                        movie_idinfo['id'], item['name'], img, currenttime, currenttime)
                     if i == 1:
                         insert_img_sql = img_sql
                     else:
@@ -341,14 +341,14 @@ class dyttMoviescrapyPipeline(object):
                     cursor.execute(add_download_sql + insert_sql)
                     self.conn.commit()
                 # 然后添加电影的图片链接 这块可以单独封装函数
-                add_img_sql = 'insert into movie.movie_dytt_imglist(movie_id,imgsrc,create_time,update_time) VALUES'
-                imgtemplatesql = "(%s,'%s',%s,%s)"
+                add_img_sql = 'insert into movie.movie_dytt_imglist(movie_id,movie_name,imgsrc,create_time,update_time) VALUES'
+                imgtemplatesql = "(%s,'%s','%s',%s,%s)"
                 insert_img_sql = ''
                 currenttime = int(time.time())
                 i = 1
                 for img in imglist:
                     img_sql = imgtemplatesql % (
-                        movie_idinfo['id'], img, currenttime, currenttime)
+                        movie_idinfo['id'], item['name'], img, currenttime, currenttime)
                     if i == 1:
                         insert_img_sql = img_sql
                     else:
@@ -425,14 +425,14 @@ class dyttMoviescrapyPipeline(object):
                     cursor.execute(add_download_sql + insert_sql)
                     self.conn.commit()
                 # 然后添加电影的图片链接 这块可以单独封装函数
-                add_img_sql = 'insert into movie.movie_dytt_imglist(movie_id,imgsrc,create_time,update_time) VALUES'
-                imgtemplatesql = "(%s,'%s',%s,%s)"
+                add_img_sql = 'insert into movie.movie_dytt_imglist(movie_id,movie_name,imgsrc,create_time,update_time) VALUES'
+                imgtemplatesql = "(%s,'%s','%s',%s,%s)"
                 insert_img_sql = ''
                 currenttime = int(time.time())
                 i = 1
                 for img in imglist:
                     img_sql = imgtemplatesql % (
-                        movie_idinfo['id'], img, currenttime, currenttime)
+                        movie_idinfo['id'], item['name'], img, currenttime, currenttime)
                     if i == 1:
                         insert_img_sql = img_sql
                     else:
@@ -560,7 +560,7 @@ class hao6vMoviescrapyPipeline(object):
                     self.conn.commit()
                 # 然后添加电影的图片链接 这块可以单独封装函数
                 add_img_sql = 'insert into movie.movie_hao6v_imglist(movie_id,movie_name,imgsrc,create_time,update_time) VALUES'
-                imgtemplatesql = "(%s,%s,'%s',%s,%s)"
+                imgtemplatesql = "(%s,'%s','%s',%s,%s)"
                 insert_img_sql = ''
                 currenttime = int(time.time())
                 i = 1
@@ -620,14 +620,14 @@ class hao6vMoviescrapyPipeline(object):
                     cursor.execute(add_download_sql + insert_sql)
                     self.conn.commit()
                 # 然后添加电影的图片链接 这块可以单独封装函数
-                add_img_sql = 'insert into movie.movie_hao6v_imglist(movie_id,imgsrc,create_time,update_time) VALUES'
-                imgtemplatesql = "(%s,'%s',%s,%s)"
+                add_img_sql = 'insert into movie.movie_hao6v_imglist(movie_id,movie_name,imgsrc,create_time,update_time) VALUES'
+                imgtemplatesql = "(%s,'%s','%s',%s,%s)"
                 insert_img_sql = ''
                 currenttime = int(time.time())
                 i = 1
                 for img in imglist:
                     img_sql = imgtemplatesql % (
-                        movie_idinfo['id'], img, currenttime, currenttime)
+                        movie_idinfo['id'], item['name'], img, currenttime, currenttime)
                     if i == 1:
                         insert_img_sql = img_sql
                     else:

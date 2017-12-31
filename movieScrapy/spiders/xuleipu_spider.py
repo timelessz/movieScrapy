@@ -371,6 +371,10 @@ class XunleipuSpider(scrapy.Spider):
         for content_field in all_field:
             if not content_field['field'] in item.keys():
                 item[content_field['field']] = ''
+        if item['region_id'] != 4:
+            name = item['name']
+            item['name'] = item['alias_name']
+            item['alias_name'] = name
         return item
 
     def replace_str(self, content_field, a_download_info):
