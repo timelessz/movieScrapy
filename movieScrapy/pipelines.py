@@ -263,8 +263,7 @@ class dyttMoviescrapyPipeline(object):
             for imgsrc in item['imglist']:
                 if not coversrc:
                     coversrc = imgsrc
-                else:
-                    imglist.append(imgsrc)
+                imglist.append(imgsrc)
             with self.conn.cursor() as cursor:
                 # 需要从数据库中 获取 电影的 类型：然后 匹配下电影的分类
                 type_info = []
@@ -390,8 +389,7 @@ class dyttMoviescrapyPipeline(object):
             for imgsrc in item['imglist']:
                 if not coversrc:
                     coversrc = imgsrc
-                else:
-                    imglist.append(imgsrc)
+                imglist.append(imgsrc)
             with self.conn.cursor() as cursor:
                 sql = "insert into movie.movie_dytt_list(title, content, region_id, region_name, update_time, create_time, href, coversrc) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)"
                 cursor.execute(sql, (
